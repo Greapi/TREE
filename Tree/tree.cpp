@@ -228,13 +228,52 @@ void printPath(Tree* tr)
 	}
 }
 
+//9.排序树-查找
+Tree* Finds(Tree *tr,int key)
+{
+	if (tr != NULL)
+	{
+		if (tr->date == key)
+			return tr;
+		else if (key > tr->date)
+			return Finds(tr->RChild, key);
+		else
+			return Finds(tr->LChild, key);
+	}
+	return NULL;
+}
+
+//排序树-插入
+/*①找到插入位置，通过不断的比较大小，找到NULL为止
+  ②当找到空指针后，将值插入
+	Tree*&t要用引用形，因为最终要改变的是存有此指针的根节点的项*/
+int Inserts(Tree*&tr,int key)
+{
+	if (tr == NULL)
+	{
+		Tree* tmp = (Tree*)malloc(sizeof(Tree));
+		if (tmp == NULL) return 0;
+		tmp->date = key;
+		tmp->LChild = tmp->RChild = NULL;
+		tr = tmp;
+		return 1;
+	}
+	else
+	{
+		if (tr->date == key)
+			return 0;
+		else if (key > tr->date)
+			return Inserts(tr->RChild, key);
+		else
+			return Inserts(tr->LChild, key);
+	}
+}
+
 //这是一个主程序
 int main()
 {
 	Tree* head = (tree*)malloc(sizeof(Tree)); Tree* tmp=NULL;
 	creatTree(head);
-	clueTree(head);
-	travelS(head);
 	return 0;
 }
 
